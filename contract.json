@@ -1,0 +1,202 @@
+{
+  "app_name": "CalcCraft",
+  "project_type": "other",
+  "platforms": [
+    "android"
+  ],
+  "session_strategy": "none",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "auth_required": false,
+      "description": "Local-only contract stub. Android-only app has no backend; this endpoint exists only as a documented spec. If a local dev stub is ever introduced, it must return {\"status\":\"ok\"}."
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "auth_required": false,
+      "description": "Not implemented (offline, no accounts). Reserved path to satisfy contract-based tooling; must not be used by the app."
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "auth_required": false,
+      "description": "Not implemented (offline, no accounts). Reserved path to satisfy contract-based tooling; must not be used by the app."
+    }
+  ],
+  "data_models": [
+    {
+      "name": "CalcError",
+      "description": "Consistent error shape for the engine and any future API errors. In-app errors are user-visible and non-crashing.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "string",
+          "required": true,
+          "description": "One of: EMPTY_EXPRESSION, INVALID_SYNTAX, UNKNOWN_TOKEN, MISMATCHED_PARENTHESES, DIVIDE_BY_ZERO, DOMAIN_ERROR."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "description": "Human-readable message safe to show in UI."
+        },
+        {
+          "name": "position",
+          "type": "int|null",
+          "required": false,
+          "description": "Optional character index in the original expression where the error was detected."
+        }
+      ]
+    },
+    {
+      "name": "EvaluationResult",
+      "description": "Result returned by CalculatorEngine.evaluate(). Exactly one of value or error must be present.",
+      "fields": [
+        {
+          "name": "value",
+          "type": "double|null",
+          "required": false,
+          "description": "Numeric result when evaluation succeeds."
+        },
+        {
+          "name": "formatted",
+          "type": "string|null",
+          "required": false,
+          "description": "Display-ready string representation of the result (e.g., trimming trailing zeros)."
+        },
+        {
+          "name": "error",
+          "type": "CalcError|null",
+          "required": false,
+          "description": "Populated when evaluation fails."
+        }
+      ]
+    },
+    {
+      "name": "HistoryEntry",
+      "description": "In-memory-only history row. Cleared on app close. Used for History screen and export text.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "long",
+          "required": true,
+          "description": "Monotonic sequence id assigned in-memory by CalcViewModel."
+        },
+        {
+          "name": "expression",
+          "type": "string",
+          "required": true,
+          "description": "User-entered expression string."
+        },
+        {
+          "name": "resultText",
+          "type": "string",
+          "required": true,
+          "description": "Either formatted numeric result or a user-visible error message."
+        },
+        {
+          "name": "isError",
+          "type": "boolean",
+          "required": true,
+          "description": "True if resultText represents an error."
+        },
+        {
+          "name": "timestampMs",
+          "type": "long",
+          "required": true,
+          "description": "System time in milliseconds when the entry was created."
+        }
+      ]
+    },
+    {
+      "name": "CalcState",
+      "description": "Single source of truth for Compose UI state in CalcViewModel.",
+      "fields": [
+        {
+          "name": "currentExpression",
+          "type": "string",
+          "required": true,
+          "description": "Current expression being edited."
+        },
+        {
+          "name": "displayValue",
+          "type": "string",
+          "required": true,
+          "description": "What is currently shown in the calculator display (expression, result, or error message)."
+        },
+        {
+          "name": "lastError",
+          "type": "CalcError|null",
+          "required": false,
+          "description": "Last evaluation error (if any)."
+        },
+        {
+          "name": "history",
+          "type": "List<HistoryEntry>",
+          "required": true,
+          "description": "In-memory list of prior evaluations."
+        }
+      ]
+    }
+  ],
+  "database": {
+    "kind": "other",
+    "notes": "No persistent storage. History is in-memory only and must be cleared when the process/app is closed. Do not add Room/SQLite/Datastore without updating this contract.",
+    "ddl": "NONE (in-memory only). No tables."
+  },
+  "required_files": [
+    "README.md",
+    "LICENSE",
+    "CONTRACT.md",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "build.gradle.kts",
+    "gradle.properties",
+    "app/build.gradle.kts",
+    "app/src/main/AndroidManifest.xml",
+    "app/src/main/java/com/calccraft/MainActivity.kt",
+    "app/src/main/java/com/calccraft/navigation/AppNav.kt",
+    "app/src/main/java/com/calccraft/ui/theme/Theme.kt",
+    "app/src/main/java/com/calccraft/ui/theme/Color.kt",
+    "app/src/main/java/com/calccraft/ui/theme/Type.kt",
+    "app/src/main/java/com/calccraft/ui/components/CalcButton.kt",
+    "app/src/main/java/com/calccraft/ui/components/Display.kt",
+    "app/src/main/java/com/calccraft/ui/screens/CalculatorScreen.kt",
+    "app/src/main/java/com/calccraft/ui/screens/HistoryScreen.kt",
+    "app/src/main/java/com/calccraft/ui/keyboard/HardwareKeyMapper.kt",
+    "app/src/main/java/com/calccraft/domain/CalcError.kt",
+    "app/src/main/java/com/calccraft/domain/Token.kt",
+    "app/src/main/java/com/calccraft/domain/Tokenizer.kt",
+    "app/src/main/java/com/calccraft/domain/ShuntingYard.kt",
+    "app/src/main/java/com/calccraft/domain/RpnEvaluator.kt",
+    "app/src/main/java/com/calccraft/domain/CalculatorEngine.kt",
+    "app/src/main/java/com/calccraft/model/HistoryEntry.kt",
+    "app/src/main/java/com/calccraft/state/CalcIntent.kt",
+    "app/src/main/java/com/calccraft/state/CalcState.kt",
+    "app/src/main/java/com/calccraft/state/CalcViewModel.kt",
+    "app/src/main/res/values/strings.xml",
+    "app/src/main/res/values/themes.xml",
+    "app/src/test/java/com/calccraft/domain/TokenizerTest.kt",
+    "app/src/test/java/com/calccraft/domain/ShuntingYardTest.kt",
+    "app/src/test/java/com/calccraft/domain/RpnEvaluatorTest.kt",
+    "app/src/test/java/com/calccraft/state/CalcViewModelTest.kt",
+    ".editorconfig",
+    "ktlint.gradle.kts"
+  ],
+  "invariants": [
+    "All clients use the same endpoint paths and JSON fields as defined here.",
+    "No renaming of routes, fields, or tables without updating contract.",
+    "Backend must return JSON errors in a consistent shape.",
+    "This app is Android-only and fully offline; no network calls are permitted at runtime.",
+    "No authentication or accounts: /auth/* endpoints are reserved/unused and must not be called by the app.",
+    "History is in-memory only; it must not be persisted to disk and must be cleared on app close/process death.",
+    "Expression evaluation must be implemented via tokenizer + shunting-yard (or AST) + evaluator; using eval, JavaScript engines, or reflective execution is forbidden.",
+    "Supported syntax must include: +, -, *, /, parentheses, unary minus, decimals, percent (postfix), exponentiation (^, right-associative), sqrt (√ and/or 'sqrt'), and functions sin/cos/tan/log.",
+    "All evaluation errors (divide-by-zero, invalid syntax, unknown token, mismatched parentheses, domain errors) must be surfaced as CalcError and shown to the user without crashing.",
+    "Hardware keyboard mapping must be supported: digits/operators append, Enter triggers equals, Backspace deletes, Escape or 'C' clears, parentheses keys append parentheses.",
+    "CI must run on push/PR and must execute: ktlintCheck, unit tests, and an assemble/build task; failing any step fails the pipeline.",
+    "Unit tests (JUnit) must cover tokenizer, shunting-yard/AST conversion, evaluator correctness, and core ViewModel/reducer input handling."
+  ]
+}

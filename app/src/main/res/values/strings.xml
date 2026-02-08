@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CalcCraft</string>
+
+    <!-- Screen Titles -->
+    <string name="title_calculator">Calculator</string>
+    <string name="title_history">History</string>
+
+    <!-- Calculator Screen -->
+    <string name="display_content_description">Calculator Display</string>
+    <string name="history_button_description">View Calculation History</string>
+    <string name="clear_button_text">C</string>
+    <string name="clear_button_description">Clear all</string>
+    <string name="delete_button_description">Backspace / Delete last character</string>
+    <string name="equals_button_text">=</string>
+    <string name="equals_button_description">Equals / Evaluate expression</string>
+    <string name="decimal_button_text">.</string>
+    <string name="decimal_button_description">Decimal point</string>
+
+    <!-- Operators -->
+    <string name="add_button_text">+</string>
+    <string name="add_button_description">Add</string>
+    <string name="subtract_button_text">-</string>
+    <string name="subtract_button_description">Subtract</string>
+    <string name="multiply_button_text">×</string>
+    <string name="multiply_button_description">Multiply</string>
+    <string name="divide_button_text">÷</string>
+    <string name="divide_button_description">Divide</string>
+    <string name="percent_button_text">%</string>
+    <string name="percent_button_description">Percent</string>
+    <string name="exponent_button_text">^</string>
+    <string name="exponent_button_description">Exponent / Power</string>
+
+    <!-- Functions -->
+    <string name="parentheses_button_text">( )</string>
+    <string name="parentheses_button_description">Parentheses</string>
+    <string name="sqrt_button_text">√</string>
+    <string name="sqrt_button_description">Square root</string>
+    <string name="sin_button_text">sin</string>
+    <string name="sin_button_description">Sine</string>
+    <string name="cos_button_text">cos</string>
+    <string name="cos_button_description">Cosine</string>
+    <string name="tan_button_text">tan</string>
+    <string name="tan_button_description">Tangent</string>
+    <string name="log_button_text">log</string>
+    <string name="log_button_description">Logarithm base 10</string>
+
+    <!-- Numbers -->
+    <string name="digit_0">0</string>
+    <string name="digit_1">1</string>
+    <string name="digit_2">2</string>
+    <string name="digit_3">3</string>
+    <string name="digit_4">4</string>
+    <string name="digit_5">5</string>
+    <string name="digit_6">6</string>
+    <string name="digit_7">7</string>
+    <string name="digit_8">8</string>
+    <string name="digit_9">9</string>
+
+    <!-- History Screen -->
+    <string name="empty_history">History is empty</string>
+    <string name="clear_history_button_description">Clear History</string>
+    <string name="export_history_button_description">Export History</string>
+    <string name="export_history_title">Export Calculation History</string>
+    <string name="export_history_subject">CalcCraft History</string>
+
+    <!-- Error Messages -->
+    <string name="error_empty_expression">Expression is empty</string>
+    <string name="error_invalid_syntax">Invalid syntax</string>
+    <string name="error_unknown_token">Unknown symbol</string>
+    <string name="error_mismatched_parentheses">Mismatched parentheses</string>
+    <string name="error_divide_by_zero">Error: Division by zero</string>
+    <string name="error_domain">Error: Domain error (e.g., sqrt of negative)</string>
+
+</resources>
